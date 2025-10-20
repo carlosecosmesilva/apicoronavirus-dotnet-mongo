@@ -1,3 +1,8 @@
+using Coronavirus.API.Middlewares;
+using Coronavirus.Application;
+using Coronavirus.Infrastructure.CrossCutting;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services
@@ -37,6 +42,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    // Redirect root to Swagger UI in development to avoid opening default localhost root
+    app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 }
 
 app.UseHttpsRedirection();

@@ -1,6 +1,7 @@
 using Coronavirus.Application.DTOs.Requests;
 using Coronavirus.Application.DTOs.Responses;
-using Coronavirus.Application.Interfaces.Services;
+using Coronavirus.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 namespace Coronavirus.API.Controllers;
 
 [ApiController]
@@ -9,6 +10,11 @@ public class InfectadoController(IInfectadoService service) : ControllerBase
 {
     private readonly IInfectadoService _service = service;
 
+    /// <summary>
+    /// Adiciona um registro de infectado.
+    /// </summary>
+    /// <param name="request">Dados do infectado</param>
+    /// <returns>Dados do infectado criado</returns>
     [HttpPost]
     [ProducesResponseType(typeof(InfectadoResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -18,6 +24,10 @@ public class InfectadoController(IInfectadoService service) : ControllerBase
         return CreatedAtAction(nameof(ObterPorId), new { id = resultado.Id }, resultado);
     }
 
+    /// <summary>
+    /// Obtem todos os registros de infectados.
+    /// </summary>
+    /// <returns>Lista com todos os infectados cadastrados</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<InfectadoResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ObterTodos()
@@ -26,6 +36,11 @@ public class InfectadoController(IInfectadoService service) : ControllerBase
         return Ok(resultado);
     }
 
+    /// <summary>
+    /// Obtem um registro de infectado pelo Id.
+    /// </summary>
+    /// <param name="id">Id do infectado</param>
+    /// <returns>Dados do infectado</returns>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(InfectadoResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -35,6 +50,12 @@ public class InfectadoController(IInfectadoService service) : ControllerBase
         return resultado == null ? NotFound() : Ok(resultado);
     }
 
+    /// <summary>
+    /// Atualiza um registro de infectado.
+    /// </summary>
+    /// <param name="id">Id do infectado</param>
+    /// <param name="request">Dados para atualização</param>
+    /// <returns></returns>
     [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(InfectadoResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -44,6 +65,11 @@ public class InfectadoController(IInfectadoService service) : ControllerBase
         return Ok(resultado);
     }
 
+    /// <summary>
+    /// Remove um registro de infectado.
+    /// </summary>
+    /// <param name="id">Id do infectado</param>
+    /// <returns>Retorna um status 204 No Content</returns>
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

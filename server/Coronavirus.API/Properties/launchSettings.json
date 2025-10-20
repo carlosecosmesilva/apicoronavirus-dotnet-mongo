@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Coronavirus.API": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:54427;http://localhost:54428"
+    }
+  }
+}
