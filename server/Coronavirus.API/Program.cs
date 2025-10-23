@@ -2,11 +2,15 @@ using Coronavirus.API.Middlewares;
 using Coronavirus.Application;
 using Coronavirus.Infrastructure.CrossCutting;
 using Microsoft.OpenApi.Models;
+using Coronavirus.API.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ResponseWrappingFilter>();
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
